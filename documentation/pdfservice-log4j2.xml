@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_THREAD_PATTERN"> %d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} --- thread_id="%tid" thread_name="%tn" thread_priority="%tp" --- %p %m%n </Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_THREAD_PATTERN}"/>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </Console>
+
+        <RollingFile name="File"
+                     fileName="${env:LOGGING_FILE_PATH}/itext-html-pdf-oss.log"
+                     filePattern="${env:LOGGING_FILE_PATH}/itext-html-pdf-oss-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_THREAD_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="1"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="gov.utcourts.oss.pdf.service" level="trace" additivity="false">
+            <AppenderRef ref="File" />
+        </Logger>
+
+        <Logger name="com.itextpdf" level="off">
+        </Logger>
+
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
