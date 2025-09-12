@@ -1,1 +1,5 @@
-.idea/*
+.DS_Store
+mvnw
+mvnw.cmd
+/target
+/.idea
