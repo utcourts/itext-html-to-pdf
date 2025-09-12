@@ -3,6 +3,7 @@ package gov.utcourts.oss.pdf.api.controller;
 
 import com.itextpdf.html2pdf.HtmlConverter;
 import gov.utcourts.oss.pdf.api.client.rest.api.HtmlToPdfApi;
+import gov.utcourts.oss.pdf.api.service.HtmlToPdfService;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,12 @@ import java.io.InputStream;
 @RequestMapping("/html-to-pdf")
 public class HtmlToPdfController implements HtmlToPdfApi {
 
+    private final HtmlToPdfService htmlToPdfService;
+
+    public HtmlToPdfController(HtmlToPdfService htmlToPdfService) {
+        this.htmlToPdfService = htmlToPdfService;
+    }
+
     /**
      * Converts an uploaded HTML file to a PDF.
      *
@@ -43,26 +50,28 @@ public class HtmlToPdfController implements HtmlToPdfApi {
      * @return {@link ResponseEntity} containing the converted PDF as {@link org.springframework.core.io.Resource}
      *         with HTTP status {@code 200 OK} if successful
      */
-   @PostMapping(
-           value = "/convert",
-           consumes = { MediaType.MULTIPART_FORM_DATA_VALUE },
-           produces = MediaType.APPLICATION_PDF_VALUE
-   )
-    public ResponseEntity<Resource> convertHtmlToPdf(
-            @RequestPart(value = "file") MultipartFile file) {
-       // Output stream of converted pdf content
-       ByteArrayOutputStream pdfOutput = new ByteArrayOutputStream();
+    @PostMapping(
+            value = "/convert",
+            consumes = { MediaType.MULTIPART_FORM_DATA_VALUE },
+            produces = MediaType.APPLICATION_PDF_VALUE
+    )
+    public ResponseEntity<Resource> convertHtmlToPdf(@RequestPart("file") MultipartFile file) {
+        try {
+            String contentType = file.getContentType();
+            // Only allow HTML
+            if (contentType == null ||
+                    !(contentType.equalsIgnoreCase("text/html") || contentType.equalsIgnoreCase("application/xhtml+xml"))) {
+                return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+                        .body(null);
+            }
 
-       // Read html file content as bytes
-       try (InputStream htmlStream = new ByteArrayInputStream(file.getBytes())) {
-           HtmlConverter.convertToPdf(htmlStream, pdfOutput);
+            Resource pdfResource = htmlToPdfService.convert(file);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(pdfResource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
-           ByteArrayResource resource = new ByteArrayResource(pdfOutput.toByteArray());
-           return ResponseEntity.ok()
-                   .contentType(MediaType.APPLICATION_PDF)
-                   .body(resource);
-       } catch (Exception e) {
-           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-       }
-   }
 }
