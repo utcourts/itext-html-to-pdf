@@ -1,20 +1,14 @@
 package gov.utcourts.oss.pdf.api.controller;
 
 
-import com.itextpdf.html2pdf.HtmlConverter;
 import gov.utcourts.oss.pdf.api.client.rest.api.HtmlToPdfApi;
 import gov.utcourts.oss.pdf.api.service.HtmlToPdfService;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 
 /**
  * @author Ramakrishnan Kuppusami
