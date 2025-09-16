@@ -136,8 +136,8 @@
 							<generatorName>spring</generatorName>
 							<output>${project.build.directory}/generated-sources/</output>
 							<generateSupportingFiles>false</generateSupportingFiles>
-							<apiPackage>gov.utcourts.oss.pdf.api.client.rest.api</apiPackage>
-							<modelPackage>gov.utcourts.oss.pdf.api.rest.models</modelPackage>
+							<apiPackage>gov.utcourts.oss.pdf.api.client</apiPackage>
+							<modelPackage>gov.utcourts.oss.pdf.api.models</modelPackage>
 							<generateSupportingFiles>true</generateSupportingFiles>
 							<configOptions>
 								<dateLibrary>java8</dateLibrary>

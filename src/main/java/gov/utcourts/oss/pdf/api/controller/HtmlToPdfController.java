@@ -1,7 +1,7 @@
 package gov.utcourts.oss.pdf.api.controller;
 
 
-import gov.utcourts.oss.pdf.api.client.rest.api.HtmlToPdfApi;
+import gov.utcourts.oss.pdf.api.client.HtmlToPdfApi;
 import gov.utcourts.oss.pdf.api.service.HtmlToPdfService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
