@@ -132,7 +132,6 @@ public class GlobalExceptionHandler {
         unsupportedRequestError.setStatusCode(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
         unsupportedRequestError.setError(error);
 
-        System.out.println("Unsupported media type is working ");
         return unsupportedRequestError;
     }
 
@@ -158,7 +157,6 @@ public class GlobalExceptionHandler {
         maxUploadSizeExceededError.setStatusCode(HttpStatus.PAYLOAD_TOO_LARGE.value());
         maxUploadSizeExceededError.setError(error);
 
-        System.out.println("Controller advice is working ");
         return maxUploadSizeExceededError;
     }
 }
