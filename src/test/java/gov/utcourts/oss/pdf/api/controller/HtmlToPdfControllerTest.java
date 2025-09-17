@@ -1,5 +1,7 @@
 package gov.utcourts.oss.pdf.api.controller;
 
+import gov.utcourts.oss.pdf.api.constant.AppConstant;
+import gov.utcourts.oss.pdf.api.exception.custom.ServiceException;
 import gov.utcourts.oss.pdf.api.service.HtmlToPdfService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +32,7 @@ class HtmlToPdfControllerTest {
 
     private MockMultipartFile mockFile;
 
+    private static String CONVERT_ENDPOINT_URL = AppConstant.API_BASE_URL + AppConstant.PATH_CONVERT;
     @TestConfiguration
     static class MockConfig {
         @Bean
@@ -54,7 +57,7 @@ class HtmlToPdfControllerTest {
 
         Mockito.when(htmlToPdfService.convert(any())).thenReturn(pdfResource);
 
-        mockMvc.perform(multipart("/html-to-pdf/convert")
+        mockMvc.perform(multipart(CONVERT_ENDPOINT_URL)
                         .file(mockFile)
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isOk())
@@ -64,9 +67,9 @@ class HtmlToPdfControllerTest {
 
     @Test
     void testConvertHtmlToPdf_Failure() throws Exception {
-        Mockito.when(htmlToPdfService.convert(any())).thenThrow(new RuntimeException("Conversion error"));
+        Mockito.when(htmlToPdfService.convert(any())).thenThrow(new ServiceException("HTML_CONVERSION_FAILED"));
 
-        mockMvc.perform(multipart("/html-to-pdf/convert")
+        mockMvc.perform(multipart(CONVERT_ENDPOINT_URL)
                         .file(mockFile)
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isInternalServerError());
@@ -78,7 +81,7 @@ class HtmlToPdfControllerTest {
                 "file", "bad.txt", "text/plain", new byte[]{0, 1, 2, 3}
         );
 
-        mockMvc.perform(multipart("/html-to-pdf/convert")
+        mockMvc.perform(multipart(CONVERT_ENDPOINT_URL)
                         .file(mockUnsupportedFile)
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isUnsupportedMediaType());

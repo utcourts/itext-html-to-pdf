@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.2.0</version> <!-- latest 2.x -->
+			<version>2.6.0</version> <!-- latest 2.x -->
 		</dependency>
 
 		<!-- lombok -->
@@ -137,7 +137,7 @@
 							<output>${project.build.directory}/generated-sources/</output>
 							<generateSupportingFiles>false</generateSupportingFiles>
 							<apiPackage>gov.utcourts.oss.pdf.api.client</apiPackage>
-							<modelPackage>gov.utcourts.oss.pdf.api.models</modelPackage>
+							<modelPackage>gov.utcourts.oss.pdf.api.model</modelPackage>
 							<generateSupportingFiles>true</generateSupportingFiles>
 							<configOptions>
 								<dateLibrary>java8</dateLibrary>

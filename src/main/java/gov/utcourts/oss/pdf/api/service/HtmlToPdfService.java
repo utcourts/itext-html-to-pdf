@@ -1,14 +1,16 @@
 package gov.utcourts.oss.pdf.api.service;
 
 import com.itextpdf.html2pdf.HtmlConverter;
+import gov.utcourts.oss.pdf.api.exception.custom.ServiceException;
+import gov.utcourts.oss.pdf.api.utils.LoggerUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -22,14 +24,21 @@ public class HtmlToPdfService {
      *
      * @param file the HTML file to convert
      * @return PDF resource
-     * @throws Exception if conversion fails
+     * @throws ServiceException if conversion fails
      */
-    public Resource convert(MultipartFile file) throws Exception {
+    public Resource convert(MultipartFile file) throws ServiceException {
+        LoggerUtils.logEntry();
+        Resource resource = null;
         try (InputStream htmlStream = new ByteArrayInputStream(file.getBytes());
              ByteArrayOutputStream pdfOutput = new ByteArrayOutputStream()) {
 
             HtmlConverter.convertToPdf(htmlStream, pdfOutput);
-            return new ByteArrayResource(pdfOutput.toByteArray());
+            resource = new ByteArrayResource(pdfOutput.toByteArray());
+            LoggerUtils.logExit();
+            return resource;
+        } catch(IOException e) {
+            LoggerUtils.error(e);
+            throw new ServiceException("HTML_CONVERSION_FAILED");
         }
     }
 }

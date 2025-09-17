@@ -14,13 +14,13 @@ class HtmlToPdfServiceTest {
 
     @Test
     void testConvert_ValidHtmlFile_ShouldGeneratePdf() throws Exception {
-        // Arrange
+        // Prepare test data
         String htmlContent = "<html><body><h1>Hello PDF</h1><p>This is a test</p></body></html>";
         MockMultipartFile file = new MockMultipartFile(
                 "file", "test.html", "text/html", htmlContent.getBytes()
         );
 
-        // Act
+        // Invoke method
         Resource pdfResource = service.convert(file);
 
         // Assert

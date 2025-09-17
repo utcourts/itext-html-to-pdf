@@ -27,9 +27,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/HtmlToPdfRequest'
-          application/octet-stream:
-            schema:
-              $ref: '#/components/schemas/HtmlToPdfRequest'
       responses:
         '200':
           description: Successfully converted HTML to PDF

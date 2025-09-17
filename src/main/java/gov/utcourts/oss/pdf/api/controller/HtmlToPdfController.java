@@ -2,12 +2,16 @@ package gov.utcourts.oss.pdf.api.controller;
 
 
 import gov.utcourts.oss.pdf.api.client.HtmlToPdfApi;
+import gov.utcourts.oss.pdf.api.constant.AppConstant;
 import gov.utcourts.oss.pdf.api.service.HtmlToPdfService;
+import gov.utcourts.oss.pdf.api.utils.LoggerUtils;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -16,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @implNote Controller class for Html to PDF api
  */
 @RestController
-@RequestMapping("/html-to-pdf")
+@RequestMapping(AppConstant.API_BASE_URL)
 public class HtmlToPdfController implements HtmlToPdfApi {
 
     private final HtmlToPdfService htmlToPdfService;
@@ -45,27 +49,28 @@ public class HtmlToPdfController implements HtmlToPdfApi {
      *         with HTTP status {@code 200 OK} if successful
      */
     @PostMapping(
-            value = "/convert",
+            value = AppConstant.PATH_CONVERT,
             consumes = { MediaType.MULTIPART_FORM_DATA_VALUE },
             produces = MediaType.APPLICATION_PDF_VALUE
     )
     public ResponseEntity<Resource> convertHtmlToPdf(@RequestPart("file") MultipartFile file) {
-        try {
-            String contentType = file.getContentType();
-            // Only allow HTML
-            if (contentType == null ||
-                    !(contentType.equalsIgnoreCase("text/html") || contentType.equalsIgnoreCase("application/xhtml+xml"))) {
-                return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-                        .body(null);
-            }
+        LoggerUtils.logEntry();
 
-            Resource pdfResource = htmlToPdfService.convert(file);
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .body(pdfResource);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        String contentType = file.getContentType();
+        LoggerUtils.info("Received Content Type: " +contentType);
+        // Only allow HTML
+        if (contentType == null ||
+                !(contentType.equalsIgnoreCase(MediaType.TEXT_HTML_VALUE) || contentType.equalsIgnoreCase(MediaType.APPLICATION_XHTML_XML_VALUE))) {
+            String errorCode = "415_UNSUPPORTED_TYPE";
+            LoggerUtils.error(errorCode);
+            throw new UnsupportedOperationException(errorCode);
         }
+
+        Resource pdfResource = htmlToPdfService.convert(file);
+        LoggerUtils.logExit();
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfResource);
     }
 
 }
