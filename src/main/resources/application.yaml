@@ -13,8 +13,6 @@ spring:
 
   override-with-generic-response: false
 
-
-
 #Logging Properties
-#logging:
-  #config: ${ITEXTHTMLPDFOSS_LOGGING_CONFIGURATION_FILE_PATH}
+logging:
+  config: ${ITEXTHTMLPDFOSS_LOGGING_CONFIGURATION_FILE_PATH}
