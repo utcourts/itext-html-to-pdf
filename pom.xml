@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>gov.utcourts.oss</groupId>
 	<artifactId>itext-html-pdf-oss</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>26.1.0</version>
 	<packaging>war</packaging>
 	<name>HtmlToPDFServiceApplication</name>
 	<description>A rest api service to convert html file to pdf</description>
@@ -90,11 +90,6 @@
 			<artifactId>jackson-databind-nullable</artifactId>
 			<version>0.2.6</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
-		</dependency>
 
 	</dependencies>
 
@@ -121,21 +116,21 @@
 				</configuration>
 			</plugin>
 
-			<!-- tag::swagger[] -->
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>7.8.0</version> <!-- use latest -->
+				<version>7.8.0</version>
 				<executions>
 					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
 							<inputSpec>${project.basedir}/src/main/resources/itext-html-pdf-oss-api.yaml</inputSpec>
 							<generatorName>spring</generatorName>
-							<output>${project.build.directory}/generated-sources/</output>
-							<generateSupportingFiles>false</generateSupportingFiles>
+							<output>${project.build.directory}/generated-sources/openapi</output>
 							<apiPackage>gov.utcourts.oss.pdf.api.client</apiPackage>
 							<modelPackage>gov.utcourts.oss.pdf.api.model</modelPackage>
 							<generateSupportingFiles>true</generateSupportingFiles>
@@ -145,8 +140,6 @@
 								<useTags>true</useTags>
 								<library>spring-boot</library>
 								<useJakartaEe>true</useJakartaEe>
-								<generateSupportingFiles>true</generateSupportingFiles>
-								<swaggerAnnotations>true</swaggerAnnotations>
 							</configOptions>
 						</configuration>
 					</execution>
