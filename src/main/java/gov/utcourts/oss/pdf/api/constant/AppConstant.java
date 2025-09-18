@@ -16,4 +16,5 @@ public class AppConstant {
     public static final String BASE_PACKAGE = "gov.utcourts.oss.pdf.api";
     public static final String API_BASE_URL = "/html-to-pdf";
     public static final String PATH_CONVERT = "/convert";
+    public static final String CHINESE_FONT_PATH = "fonts/Microsoft Yahei.ttf";
 }
