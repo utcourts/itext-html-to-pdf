@@ -15,13 +15,12 @@ This service is powered by **iText 7** with the **pdfHTML add-on** for HTML-to-P
 
 ## 📦 Installation
 ```bash
-# Clone the repository:
-git clone https://slc-git01.utahcourts.local/development/orange_dev/itext-html-pdf-oss.git
+# Clone the repository
 
 # Move into project folder
 cd itext-html-pdf-oss
 
-# Build the project (example for Maven):
+# Build the project (example for Maven)s
 mvn clean install
 
 # Run the service

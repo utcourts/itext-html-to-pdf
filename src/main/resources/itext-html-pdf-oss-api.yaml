@@ -5,11 +5,8 @@ info:
   title: "iText - HTML to PDF API Service"
   termsOfService: "http://swagger.io/terms/"
   contact:
-    name: "Ramakrishnan Kuppusami"
-    email: "Ramkrishnan.Kuppusami@cdw.com"
-servers:
-  - url: https://devapps.utcourts.gov/html-to-pdf
-  - url: http://devapps.utcourts.gov/html-to-pdf
+    name: "Brody Arishita"
+    email: "brodya@utcourts.gov"
 tags:
   - name: HtmlToPDF
     description:
