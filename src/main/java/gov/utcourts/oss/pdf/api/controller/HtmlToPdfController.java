@@ -57,7 +57,8 @@ public class HtmlToPdfController implements HtmlToPdfApi {
         LoggerUtils.logEntry();
 
         String contentType = file.getContentType();
-        LoggerUtils.info("Received Content Type: " +contentType);
+        LoggerUtils.info("Received Content Type: " + contentType);
+        LoggerUtils.info("File Name: " + file.getOriginalFilename());
         // Only allow HTML
         if (contentType == null ||
                 !(contentType.equalsIgnoreCase(MediaType.TEXT_HTML_VALUE) || contentType.equalsIgnoreCase(MediaType.APPLICATION_XHTML_XML_VALUE))) {

@@ -5,6 +5,9 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
 import com.itextpdf.io.font.FontProgram;
 import com.itextpdf.io.font.FontProgramFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.font.FontProvider;
 import gov.utcourts.oss.pdf.api.exception.custom.ServiceException;
 import gov.utcourts.oss.pdf.api.utils.LoggerUtils;
@@ -37,13 +40,16 @@ public class HtmlToPdfService {
         LoggerUtils.logEntry();
         Resource resource = null;
         try (InputStream htmlStream = new ByteArrayInputStream(file.getBytes());
-             ByteArrayOutputStream pdfOutput = new ByteArrayOutputStream()) {
-
-            HtmlConverter.convertToPdf(htmlStream, pdfOutput, buildConverterProperties());
-            resource = new ByteArrayResource(pdfOutput.toByteArray());
+             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             PdfWriter pdfWriter = new PdfWriter(byteArrayOutputStream);
+             PdfDocument pdfDocument = new PdfDocument(pdfWriter)
+        ) {
+            pdfDocument.setDefaultPageSize(PageSize.LETTER);
+            HtmlConverter.convertToPdf(htmlStream, pdfDocument);
+            resource = new ByteArrayResource(byteArrayOutputStream.toByteArray());
             LoggerUtils.logExit();
             return resource;
-        } catch(IOException e) {
+        } catch (IOException e) {
             LoggerUtils.error(e);
             throw new ServiceException("HTML_CONVERSION_FAILED");
         }
