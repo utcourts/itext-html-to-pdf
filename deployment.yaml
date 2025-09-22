@@ -27,19 +27,8 @@ spec:
             runAsUser: 9507
           volumeMounts:
           - name: logs-volume
-            mountPath: /usr/local/logs
+            mountPath: /export/paperwork
           env:
-            - name: ITEXTHTMLPDFOSS_MAX_FILE_SIZE
-              valueFrom:
-                configMapKeyRef:
-                  name: itext-html-pdf-oss-configmap
-                  key: ITEXTHTMLPDFOSS_MAX_FILE_SIZE
-            - name: ITEXTHTMLPDFOSS_MAX_REQUEST_SIZE
-              valueFrom:
-                configMapKeyRef:
-                  name: itext-html-pdf-oss-configmap
-                  key:
-                    ITEXTHTMLPDFOSS_MAX_REQUEST_SIZE
             - name: ITEXTHTMLPDFOSS_LOGGING_CONFIGURATION_FILE_PATH
               valueFrom:
                 configMapKeyRef:
@@ -50,11 +39,6 @@ spec:
                 configMapKeyRef:
                   name: itext-html-pdf-oss-configmap
                   key: LOGGING_FILE_PATH
-            - name: SYSTEM
-              valueFrom:
-                configMapKeyRef:
-                  name: itext-html-pdf-oss-configmap
-                  key: SYSTEM
       volumes:
       - name: logs-volume
         persistentVolumeClaim:
