@@ -1,0 +1,18 @@
+# Core Server Properties
+server:
+  error:
+    include-stacktrace: never
+
+#Spring Properties
+spring:
+  application.name: ItextHtmlPDFOSS
+  servlet:
+    multipart:
+      max-file-size: 7MB
+      max-request-size: 10MB
+
+  override-with-generic-response: false
+
+#Logging Properties
+logging:
+  config: ${ITEXTHTMLPDFOSS_LOGGING_CONFIGURATION_FILE_PATH}
