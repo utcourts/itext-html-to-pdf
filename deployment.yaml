@@ -24,7 +24,7 @@ spec:
             - containerPort: 5000
               protocol: TCP
           securityContext:
-            runAsUser: 9507
+            runAsUser: 1000670000
           volumeMounts:
           - name: logs-volume
             mountPath: /export/paperwork
@@ -42,7 +42,7 @@ spec:
       volumes:
       - name: logs-volume
         persistentVolumeClaim:
-          claimName: itext-html-pdf-oss-pvc
+          claimName: paperwork-rwx-pvc
 
 ---
 apiVersion: v1
