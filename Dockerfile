@@ -17,14 +17,6 @@ FROM tomcat:10.1.11-jdk21-openjdk as itext-html-pdf-oss
 
 ENV TZ="America/Denver"
 
-RUN mkdir -p /export/paperwork && \
-    chown -R 0:0 /usr/local/tomcat /export/paperwork && \
-    chmod -R g+rwX /usr/local/tomcat /export/paperwork
-
-# Copy the required files into the Tomcat directory
-COPY deployment/setenv.sh /usr/local/tomcat/bin/
-
-COPY documentation/itext-html-pdf-oss-log4j2.xml /export/paperwork
 
 RUN echo "org.apache.tomcat.util.digester.PROPERTY_SOURCE=org.apache.tomcat.util.digester.EnvironmentPropertySource" >> /usr/local/tomcat/conf/catalina.properties
 
