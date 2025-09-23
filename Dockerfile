@@ -17,6 +17,9 @@ FROM tomcat:10.1.11-jdk21-openjdk as itext-html-pdf-oss
 
 ENV TZ="America/Denver"
 
+RUN mkdir -p /export/paperwork && \
+    chown -R 0:0 /usr/local/tomcat /export/paperwork && \
+    chmod -R g+rwX /usr/local/tomcat /export/paperwork
 
 RUN echo "org.apache.tomcat.util.digester.PROPERTY_SOURCE=org.apache.tomcat.util.digester.EnvironmentPropertySource" >> /usr/local/tomcat/conf/catalina.properties
 
