@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static gov.utcourts.oss.pdf.api.constant.AppConstant.CHINESE_FONT_PATH;
+import static gov.utcourts.oss.pdf.api.constant.AppConstant.METADATA_ITEXT_OSS;
 
 /**
  * Service class to handle HTML to PDF conversion logic.
@@ -45,6 +46,7 @@ public class HtmlToPdfService {
              PdfDocument pdfDocument = new PdfDocument(pdfWriter)
         ) {
             pdfDocument.setDefaultPageSize(PageSize.LETTER);
+            pdfDocument.getDocumentInfo().setKeywords(METADATA_ITEXT_OSS);
             HtmlConverter.convertToPdf(htmlStream, pdfDocument);
             resource = new ByteArrayResource(byteArrayOutputStream.toByteArray());
             LoggerUtils.logExit();
