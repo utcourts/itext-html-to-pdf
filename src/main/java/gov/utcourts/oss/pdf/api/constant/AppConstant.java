@@ -17,4 +17,6 @@ public class AppConstant {
     public static final String API_BASE_URL = "/html-to-pdf";
     public static final String PATH_CONVERT = "/convert";
     public static final String CHINESE_FONT_PATH = "fonts/Microsoft Yahei.ttf";
+
+    public static final String METADATA_ITEXT_OSS = "Generated using Utah Courts iText OSS";
 }
