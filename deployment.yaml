@@ -18,7 +18,12 @@ spec:
     spec:
     
       containers:
-        - name: APPLICATION_NAME-container
+        - resources:
+            limits:
+              memory: 4Gi
+            requests:
+              memory: 2Gi
+          name: APPLICATION_NAME-container
           image: APPLICATION_NAME:latest
           ports:
             - containerPort: 5000
@@ -29,6 +34,8 @@ spec:
           - name: logs-volume
             mountPath: /export/paperwork
           env:
+            - name: JAVA_TOOL_OPTIONS
+              value: '-Xms1g -Xmx3g'
             - name: ITEXTHTMLPDFOSS_LOGGING_CONFIGURATION_FILE_PATH
               valueFrom:
                 configMapKeyRef:
