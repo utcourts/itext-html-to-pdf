@@ -1,4 +1,4 @@
 include:
   - project: 'development/all_dev/devopspipelinetemplates' 
-    ref: 'develop'
+    ref: 'UTCOURT-19272_Devops_codesync'
     file: 'Docker/general-docker-image-build.yml'
