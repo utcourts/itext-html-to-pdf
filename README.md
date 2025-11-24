@@ -1,4 +1,4 @@
-# HTML to PDF REST API Service
+# UTCourts HTML to PDF REST API Service
 
 A REST API service that accepts HTML content in the request payload and responds with the generated PDF content in binary form.  
 This service is powered by **iText 7** with the **pdfHTML add-on** for HTML-to-PDF conversion.
