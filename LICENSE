@@ -1,5 +1,14 @@
-                    GNU AFFERO GENERAL PUBLIC LICENSE
+Project: HTML to PDF REST API Service
+This project makes use of the iText 7 PDF library (including pdfHTML), which is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+
+Important iText Notice:
+- If you distribute this project or make it accessible over a network, you must also make your complete source code available under the AGPL.
+- For closed-source or commercial use of iText, a separate commercial license must be obtained from iText Software (https://itextpdf.com/).
+
+====================================================================
+GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007
+====================================================================
 
  Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
  Everyone is permitted to copy and distribute verbatim copies
@@ -633,8 +642,8 @@ the "copyright" line and a pointer to where the full notice is found.
     Copyright (C) <year>  <name of author>
 
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,

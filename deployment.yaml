@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: APPLICATION_NAME
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: '*'
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"APPLICATION_NAME:latest","namespace":"PROJECT"},"fieldPath":"spec.template.spec.containers[?(@.name==\"APPLICATION_NAME-container\")].image","pause":"false"}]
+spec:
+  replicas: REPLICAS
+  selector:
+    matchLabels:
+      app: APPLICATION_NAME
+  template:
+    metadata:
+      labels:
+        app: APPLICATION_NAME
+    spec:
+    
+      containers:
+        - resources:
+            limits:
+              memory: 4Gi
+            requests:
+              memory: 2Gi
+          name: APPLICATION_NAME-container
+          image: APPLICATION_NAME:latest
+          ports:
+            - containerPort: 5000
+              protocol: TCP
+          securityContext:
+            runAsUser: 1000670000
+          volumeMounts:
+          - name: logs-volume
+            mountPath: /export/paperwork
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: '-Xms1g -Xmx3g'
+            - name: ITEXTHTMLPDFOSS_LOGGING_CONFIGURATION_FILE_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: itext-html-pdf-oss-configmap
+                  key: ITEXTHTMLPDFOSS_LOGGING_CONFIGURATION_FILE_PATH
+            - name: LOGGING_FILE_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: itext-html-pdf-oss-configmap
+                  key: LOGGING_FILE_PATH
+      volumes:
+      - name: logs-volume
+        persistentVolumeClaim:
+          claimName: paperwork-rwx-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: APPLICATION_NAME
+spec:
+  selector:
+    app: APPLICATION_NAME
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+---
+
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: APPLICATION_NAME-route
+spec:
+  host: APPLICATION_NAME-PROJECT.OKD_URL
+  to:
+    kind: Service
+    name: APPLICATION_NAME
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
