@@ -28,8 +28,6 @@ spec:
           ports:
             - containerPort: 5000
               protocol: TCP
-          securityContext:
-            runAsUser: 1000670000
           volumeMounts:
           - name: logs-volume
             mountPath: /export/paperwork
