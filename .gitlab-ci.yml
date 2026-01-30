@@ -1,0 +1,4 @@
+include:
+  - project: 'development/all_dev/devopspipelinetemplates' 
+    ref: 'develop'
+    file: 'Docker/general-docker-image-build.yml'
